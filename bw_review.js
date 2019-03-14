@@ -33,18 +33,20 @@
       within textStr
 
 */
-
+//the init() function will run when the page is loaded
 window.onload = init();
 
+// The init function will store all the values in an array, it then loops through it, and if the mouse goes over it, will change the cursor to a pointer and run the lightStars() function. If something is typed in the textarea box, the updateCount function is run
 function init() {
       var stars = document.querySelectorAll("span#stars img");
       for (var i = 0; i < stars.length; i++) {
             stars[i].style.cursor = "pointer";
-            stars[i].addEventListener("mouseenter", lightStars)
-      };
+            stars[i].addEventListener("mouseenter", lightStars);
+      }
       document.getElementById("comment").addEventListener("keyup", updateCount);
 }
 
+// When the lightstars() function is run the starNumber variable stores which star was hovered over. The stars variable stores which star triggered the event (and all the ones before it). for each value in the array the stars will light up, and then unlight up when no longer hovered over. The page then tells how many stars. When the stars leave it runs the turnOffStars function. When someone clicks on the stars it saves that value, and will not unlight the stars.
 function lightStars() {
       var starNumber = event.target.alt;
       var stars = document.querySelectorAll("span#stars img");
@@ -61,6 +63,7 @@ function lightStars() {
       })
 }
 
+// the function will unlight the same number of stars that were lit up, and save the value of how many stars were lit into a variable.
 function turnOffStars() {
       var stars = document.querySelectorAll("span#stars img");
       for (var i = 0; i < stars.length; i++) {
@@ -69,12 +72,20 @@ function turnOffStars() {
       document.getElementById("rating").value = "";
 }
 
-function updateCount() {}
-
-
-
-
-
+//The updateCount() function will update the number of characters that have been typed, adding (or subtracting) them from the wordcounter. If it goes over 1000 characters, then it will change to red, meant to show that it is over limit.
+function updateCount() {
+      var commentText = document.getElementById("comment").value;
+      var charCount = countCharacters(commentText);
+      var wordCountBox = document.getElementById("wordCount");
+      wordCountBox.value = charCount + "/1000";
+      if (charCount > 1000) {
+            wordCountBox.style.color = "white";
+            wordCountBox.style.backgroundColor = "red";
+      } else {
+            wordCountBox.style.color = "black";
+            wordCountBox.style.backgroundColor = "white";
+      }
+}
 
 /*=================================================================*/
 
